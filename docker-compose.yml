@@ -1,0 +1,10 @@
+services:
+  barcodeapi:
+    build: .
+    container_name: barcodeapi
+    ports:
+      - "8080:8080"
+    volumes:
+      - /root/barcodeapi/cache:/cache
+      - /root/barcodeapi/config:/config
+    restart: unless-stopped
