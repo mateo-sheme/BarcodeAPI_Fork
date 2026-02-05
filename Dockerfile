@@ -3,10 +3,12 @@
 FROM maven:3-openjdk-11-slim AS build
 COPY src /home/app/src
 COPY pom.xml /home/app
-RUN mvn clean compile assembly:single -f /home/app/pom.xml 
+#this was old RUN mvn clean compile assembly:single -f /home/app/pom.xml crashed changed to new one below
+RUN mvn clean package -DskipTests -f /home/app/pom.xml
 
 # Package
-FROM eclipse-temurin:11-jre-jammy
+# change from old depracted openjdk to new one avalibale on docker hub
+FROM eclipse-temurin:11-jre-jammy 
 RUN apt update && apt install -y libfreetype-dev && rm -rf /var/lib/apt/lists/*
 COPY --from=build /home/app/target/server.jar /usr/local/lib/server.jar
 COPY config /config
