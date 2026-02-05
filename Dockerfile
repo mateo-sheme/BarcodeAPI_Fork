@@ -10,7 +10,7 @@ RUN mvn clean package -DskipTests -f /home/app/pom.xml
 # change from old depracted openjdk to new one avalibale on docker hub
 FROM eclipse-temurin:11-jre-jammy 
 RUN apt update && apt install -y libfreetype-dev && rm -rf /var/lib/apt/lists/*
-COPY --from=build /home/app/target/server.jar /usr/local/lib/server.jar
+COPY --from=build /home/app/target/*.jar /usr/local/lib/server.jar
 COPY config /config
 COPY resources /resources
 
